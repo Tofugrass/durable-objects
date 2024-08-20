@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 import http = require("node:http");
 
 
