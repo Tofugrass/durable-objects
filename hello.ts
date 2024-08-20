@@ -105,11 +105,11 @@ const timerExpired = async (league_id: string, user_id: string) => {
   try {
     const response = await fetch(`https://lolfantasy.gg/api/auto-draft/`, {
       headers: new Headers({
-        "Content-Type": "application/json; charset=utf-8",
+        "Content-Type": "application/x-www-form-urlencoded", //application/json
         Authorization: `Bearer ${process.env.CRONHOOKS_WEBHOOK_SECRET}`,
       }),
       method: "POST",
-      body: JSON.stringify({ league_id, user_id }),
+      body: `league_id=${league_id}&user_id=${user_id}`, // JSON.stringify({ league_id, user_id })
     });
   } catch (err) {
     console.log("Issue sending auto-draft webhook");
