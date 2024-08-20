@@ -1,0 +1,17 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": ["javascript"],
+
+  /**** PRETTIER CONFIG *********************************************/
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[css]": {
+    "editor.formatOnSave": false
+  },
+  "prettier.printWidth": 80,
+  "prettier.singleQuote": false,
+  "prettier.trailingComma": "es5",
+  "editor.rulers": [{ "column": 80, "color": "#ffcc0022" }]
+}
