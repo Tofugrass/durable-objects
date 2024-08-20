@@ -48,6 +48,11 @@ const server = http.createServer((req, res) => {
       return500('ttp is not numeric!');
       return;
     }
+    if(draftTimers[league_id]){
+      //start draft timer
+      clearTimeout(draftTimers[league_id]);
+      delete draftTimers[league_id]
+    }
     //start draft timer
     const timerID = setTimeout(() => {
       void timerExpired(league_id, user_id);
@@ -62,6 +67,11 @@ const server = http.createServer((req, res) => {
   else if(req.url.includes('/cancel-timer')){
     if(!league_id){
       return500('Missing league_id!');
+      return;
+    }
+    if(!draftTimers[league_id]){
+      console.log('Missing timer on call to cancel-timer!')
+      return200('Missing timer on call to cancel-timer!');
       return;
     }
     //start draft timer
