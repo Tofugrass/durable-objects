@@ -14,6 +14,11 @@ const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/plain');
     res.end(`${msg}\n`);
   }
+  const return401 = () => {
+    res.statusCode = 401;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end(`You are not authorized!\n`);
+  }
   const return200 = (msg:string) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
@@ -25,6 +30,12 @@ const server = http.createServer((req, res) => {
   }
   console.log(req.url)
   
+  if(req.headers.authorization !== `Bearer ${process.env.CRONHOOKS_API_KEY}`){
+    console.log('unauthorized access attempt', req.url, req.headers)
+    return401();
+    return;
+  }
+
   const urlParams = new URLSearchParams(req.url.slice(req.url.indexOf('?') + 1, req.url.length));
   const league_id = urlParams.get('league_id');
   const user_id = urlParams.get('user_id');
@@ -71,7 +82,7 @@ const server = http.createServer((req, res) => {
     }
     if(!draftTimers[league_id]){
       console.log('Missing timer on call to cancel-timer!')
-      return200('Missing timer on call to cancel-timer!');
+      return500('Missing timer on call to cancel-timer!');
       return;
     }
     //start draft timer
@@ -96,7 +107,7 @@ const timerExpired = async (league_id: string, user_id: string) => {
   try{
     const response = await fetch(`https://lolfantasy.gg/api/auto-draft/`, 
       {
-        headers:new Headers({"Content-Type": "application/json; charset=utf-8",}) , 
+        headers:new Headers({"Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${process.env.CRONHOOKS_WEBHOOK_SECRET}`}) , 
         method: 'POST', 
         body:JSON.stringify({ league_id, user_id })
       },
