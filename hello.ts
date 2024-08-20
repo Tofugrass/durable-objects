@@ -107,7 +107,7 @@ const timerExpired = async (league_id: string, user_id: string) => {
       `https://lolfantasy.gg/api/auto-draft?league_id=${league_id}&user_id=${user_id}`,
       {
         headers: new Headers({
-          "Content-Type": "application/x-www-form-urlencoded", //application/json
+          // "Content-Type": "application/x-www-form-urlencoded", //application/json
           Authorization: `Bearer ${process.env.CRONHOOKS_WEBHOOK_SECRET}`,
         }),
         method: "GET",
