@@ -1,6 +1,5 @@
 require("dotenv").config();
 import http = require("node:http");
-const fetch = require("node-fetch");
 
 const hostname = "localhost";
 const port = 3000;
