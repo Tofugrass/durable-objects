@@ -90,6 +90,9 @@ const server = http.createServer((req, res) => {
 
     return200("Called cancel-timer!");
     return;
+  } else if (req.url.includes("/list")) {
+    return200(JSON.stringify(draftTimers));
+    return;
   } else {
     res.statusCode = 200;
     res.setHeader("Content-Type", "text/plain");
